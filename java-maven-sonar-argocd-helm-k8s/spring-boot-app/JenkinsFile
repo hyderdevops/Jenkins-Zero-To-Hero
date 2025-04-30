@@ -1,10 +1,13 @@
 pipeline {
-  agent {
-    docker {
-      image 'eclipse-temurin:17-jdk'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+  agent any
+    tools {
+        jdk 'jdk17' // Use the name as defined in Jenkins > Global Tool Configuration
     }
-  }
+
+    environment {
+        JAVA_HOME = "${tool 'jdk17'}"
+        PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+    }
   stages {
     stage('Checkout') {
       steps {
