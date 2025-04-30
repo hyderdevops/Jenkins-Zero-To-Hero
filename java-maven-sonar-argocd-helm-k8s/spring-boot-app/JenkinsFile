@@ -1,19 +1,20 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'jdk17' // This must match the name in Jenkins global tool config
-    }
-
     environment {
-        JAVA_HOME = "${tool 'jdk17'}"
+        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64' // change as needed
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     }
 
     stages {
+        stage('Verify Java') {
+            steps {
+                sh 'java -version' // should show Java 17
+            }
+        }
+
         stage('SonarQube Analysis') {
             steps {
-                sh 'java -version' // confirm it's Java 17
                 sh 'mvn clean verify sonar:sonar'
             }
         }
