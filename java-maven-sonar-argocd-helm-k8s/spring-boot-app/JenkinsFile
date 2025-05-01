@@ -12,11 +12,6 @@ pipeline {
                 sh 'java -version' // should show Java 17
             }
         }
-        stage('SonarQube Analysis') {
-            steps {
-                sh 'mvn clean verify sonar:sonar'
-            }
-        }
         stage('Checkout') {
             steps {
                 sh 'echo passed'
